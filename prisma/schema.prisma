@@ -12,7 +12,7 @@ enum Role {
 }
 
 model User {
-  id       String @id @default(uuid())
+  id       Int @id @default(autoincrement())
   name     String
   lastname String
   email    String @unique
@@ -32,10 +32,10 @@ model User {
 }
 
 model Store {
-  id   String @id @default(uuid())
+  id   Int @id @default(autoincrement())
   name String
 
-  ownerId String
+  ownerId Int
   owner   User   @relation("StoreOwner", fields: [ownerId], references: [id])
 
   users  UserStore[]
@@ -46,8 +46,8 @@ model Store {
 }
 
 model UserStore {
-  userId  String
-  storeId String
+  userId  Int
+  storeId Int
 
   user  User  @relation(fields: [userId], references: [id])
   store Store @relation(fields: [storeId], references: [id])
@@ -56,8 +56,8 @@ model UserStore {
 }
 
 model UserHierarchy {
-  managerId  String
-  employeeId String
+  managerId  Int
+  employeeId Int
 
   manager  User @relation("manager", fields: [managerId], references: [id])
   employee User @relation("employee", fields: [employeeId], references: [id])
@@ -71,8 +71,8 @@ model Shift {
   startTime DateTime
   endTime   DateTime
 
-  userId  String
-  storeId String
+  userId  Int
+  storeId Int
 
   user  User  @relation(fields: [userId], references: [id])
   store Store @relation(fields: [storeId], references: [id])
